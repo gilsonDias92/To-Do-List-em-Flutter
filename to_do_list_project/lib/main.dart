@@ -48,11 +48,11 @@ class MyHomeState extends State<MyHome> {
       body: Container(
         // widgets q precisaam receber um filho, se for mais de um recebe  children
         // renderiza widgets na forma vertical
-        // column rece children pois pode receber varios widgets
+        // column recebe children pois pode receber varios widgets
         child: Column(
           children: <Widget>[
             Form(
-              // prop child é obrigatoria!!
+              // prop child é obrigatoria para o form!!
 
               // row renderiza na forma horizontal, um ao lado do outro.
               // iremos colocar um campo de input e um botao lado a lado
@@ -60,9 +60,19 @@ class MyHomeState extends State<MyHome> {
                 children: <Widget>[
                   // input precisa estar dentro de uma definicao de tamanho de campo
                   // expanded utiliza todo o espaço da linha disponivel, só pode ter 1 child
-                  Expanded(child: TextFormField(
+                  Expanded(
+                    child: TextFormField(
+                      // estiliza o texto do campo
+                      style: TextStyle(fontSize: 32, color: Colors.black87),
 
-                  ),
+                      // estiliza o campo
+                      decoration: InputDecoration(
+                          hintText: 'Type a new task here...',
+                          hintStyle: TextStyle(fontSize: 15)),
+
+                      // defini o tipo de campo (texto, email, numero)
+                      keyboardType: TextInputType.text,
+                    ),
                   ),
                   RaisedButton(
                     // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
