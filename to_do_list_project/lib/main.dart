@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 main() => runApp(MyApp());
 // método que inicia o app
 
@@ -32,6 +31,10 @@ class MyHomeState extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('To-Do List'),
+      ),
+    );
   }
 }
