@@ -56,7 +56,23 @@ class MyHomeState extends State<MyHome> {
 
               // row renderiza na forma horizontal, um ao lado do outro.
               // iremos colocar um campo de input e um botao lado a lado
-              child: Row(),
+              child: Row(
+                children: <Widget>[
+                  // input precisa estar dentro de uma definicao de tamanho de campo
+                  // expanded utiliza todo o espaço da linha disponivel, só pode ter 1 child
+                  Expanded(child: TextFormField(
+
+                  ),
+                  ),
+                  RaisedButton(
+                    // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
+                    child: Text('Add'),
+                    onPressed: () {
+                      print('Botão OK');
+                    },
+                  ),
+                ],
+              ),
             )
           ],
         ),
