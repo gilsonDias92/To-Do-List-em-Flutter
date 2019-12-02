@@ -39,7 +39,16 @@ class MyHomeState extends State<MyHome> {
       // renderiza a barra no topo do app
       appBar: AppBar(
         //Widget AppBar recebe parametros
-        centerTitle: true,
+
+        //dentro do leading definimos um builder para adcionar o icone
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.check),
+              onPressed: () {},
+            );
+          },
+        ),
         title: Text('To-Do List'),
         // title nao pode receber texto, tem q receber o
         // widget Text com a string dentro...
@@ -47,7 +56,6 @@ class MyHomeState extends State<MyHome> {
 
       // renderiza o corpo do app e dentro dele os parametros
       body: Container(
-        
         // espaçamento no container principal para descolar elementos da borda
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
 
@@ -84,15 +92,16 @@ class MyHomeState extends State<MyHome> {
                     margin: EdgeInsets.only(left: 20),
                     child: RaisedButton(
                       // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
-                      child: Text('Add', style: TextStyle(fontSize: 17),
+                      child: Text(
+                        'Add',
+                        style: TextStyle(fontSize: 17),
                       ),
                       onPressed: () {
                         print('Botão OK');
                       },
                       // definindo border radius dentro do button
-                      shape: RoundedRectangleBorder(borderRadius: 
-                        new  BorderRadius.circular(20.0)
-                        ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20.0)),
                       color: Colors.blueAccent,
                       textColor: Colors.white,
                     ),
