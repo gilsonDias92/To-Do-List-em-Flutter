@@ -39,6 +39,7 @@ class MyHomeState extends State<MyHome> {
       // renderiza a barra no topo do app
       appBar: AppBar(
         //Widget AppBar recebe parametros
+        centerTitle: true,
         title: Text('To-Do List'),
         // title nao pode receber texto, tem q receber o
         // widget Text com a string dentro...
@@ -46,6 +47,10 @@ class MyHomeState extends State<MyHome> {
 
       // renderiza o corpo do app e dentro dele os parametros
       body: Container(
+        
+        // espaçamento no container principal para descolar elementos da borda
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+
         // widgets q precisaam receber um filho, se for mais de um recebe  children
         // renderiza widgets na forma vertical
         // column recebe children pois pode receber varios widgets
@@ -70,17 +75,28 @@ class MyHomeState extends State<MyHome> {
                           hintText: 'Type a new task here...',
                           hintStyle: TextStyle(fontSize: 15)),
 
-                      // defini o tipo de campo (texto, email, numero)
+                      // define o tipo de campo (texto, email, numero)
                       keyboardType: TextInputType.text,
                     ),
                   ),
-                  RaisedButton(
-                    // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
-                    child: Text('Add'),
-                    onPressed: () {
-                      print('Botão OK');
-                    },
-                  ),
+                  Container(
+                    // margin: medida em pixel
+                    margin: EdgeInsets.only(left: 20),
+                    child: RaisedButton(
+                      // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
+                      child: Text('Add', style: TextStyle(fontSize: 17),
+                      ),
+                      onPressed: () {
+                        print('Botão OK');
+                      },
+                      // definindo border radius dentro do button
+                      shape: RoundedRectangleBorder(borderRadius: 
+                        new  BorderRadius.circular(20.0)
+                        ),
+                      color: Colors.blueAccent,
+                      textColor: Colors.white,
+                    ),
+                  )
                 ],
               ),
             )
