@@ -30,6 +30,8 @@ class MyHomeState extends State<MyHome> {
   // stateful retorna um state
   // state executa o build
 
+  // GlobalKey é uma chave unica no app, podemos acessar elementos de forma exclusiva
+  // FormState obj usado para salvar, resetar e validar todos os campos filhos dentro do form
   //chave para validar o estado do formulário
   // proximo passo: associar chave ao formulário
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -38,6 +40,9 @@ class MyHomeState extends State<MyHome> {
   // ... tarefas numa lista ou num banco de dados
   // proximo passo: definir a controller: taskControler no formulario
   final TextEditingController taskController = TextEditingController();
+
+  // lista de tarefas
+  List<String> _tasks = List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +114,7 @@ class MyHomeState extends State<MyHome> {
                       // vínculo do controlador com o campo de texto
                       controller: taskController,
                       // estiliza o texto do campo
-                      style: TextStyle(fontSize: 32, color: Colors.black87),
+                      style: TextStyle(fontSize: 24, color: Colors.black87),
 
                       // estiliza o campo
                       decoration: InputDecoration(
@@ -130,19 +135,24 @@ class MyHomeState extends State<MyHome> {
                         style: TextStyle(fontSize: 17),
                       ),
                       onPressed: () {
-                        
                         // através da chave do form ele pega o estado atual e valida
                         if (_formKey.currentState.validate()) {
+                          // chama a funcao build a cada add na lista, e mudamos o estado do componente
+                          // dentro do set state as tarefas devem ser adicionadas pois ele executa o build
+                          // notifica o app q o estado mudou, e chama a funcao build adicionando na lista
+                          // add é executado antes do build
+                          setState(() {
+                            // se for válido mostra o q foi digitado no terminal
+                            // se o campo estiver vazio ele mostra a mensagem de erro ...
+                            // .. definida na regra de validação do validator
+                            String task = taskController.text;
+                            // controlador recebe o conteudo do texto ao clicar no botão
+                            // adicionando tarefa na lista e limpando campo
+                            _tasks.add(task);
+                          });
 
-                          // se for válido mostra o q foi digitado no terminal
-                          // se o campo estiver vazio ele mostra a mensagem de erro ...
-                          // .. definida na regra de validação do validator
-                          debugPrint(taskController.text);
-                        } else {
-                          debugPrint('Empty field');
+                          taskController.clear();
                         }
-
-                        // controlador recebe o conteudo do texto ao clicar no botão
                       },
                       // definindo border radius dentro do button
                       shape: RoundedRectangleBorder(
@@ -152,6 +162,22 @@ class MyHomeState extends State<MyHome> {
                     ),
                   )
                 ],
+              ),
+            ),
+            Expanded(
+              // lista precisa estar dentro do expanded para o flutter saber quanto ela ...
+              // ... vai ocupar da tela
+              // Lista de tarefas a ser exibida na tela
+              child: ListView.builder(
+                // comprimento da lista
+                itemCount: _tasks.length,
+
+                // builder q monta a lista a cada clique no botao
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text((index+1).toString() + ' - ' + _tasks[index]),
+                  );
+                },
               ),
             )
           ],
