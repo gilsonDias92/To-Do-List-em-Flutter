@@ -88,80 +88,84 @@ class MyHomeState extends State<MyHome> {
         // column recebe children pois pode receber varios widgets
         child: Column(
           children: <Widget>[
-            Form(
-              // associando _formKey como chave do formulario
-              key: _formKey,
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
 
-              // prop child é obrigatoria para o form!!
-              // row renderiza na forma horizontal, um ao lado do outro.
-              // iremos colocar um campo de input e um botao lado a lado
-              child: Row(
-                children: <Widget>[
-                  // input precisa estar dentro de uma definicao de tamanho de campo
-                  // expanded utiliza todo o espaço da linha disponivel, só pode ter 1 child
-                  Expanded(
-                    child: TextFormField(
-                      // validação do campo, se o campo estiver vazio retorna erro.
-                      // se o validator retornar NULL campo está preenchido.
-                      // próximo passo: chamar o validator ao clicar no button
-                      validator: (value) {
-                        if (value.trim().isEmpty) {
-                          return 'Task field is required!';
-                        }
-                        return null;
-                      },
+              child: Form(
+                // associando _formKey como chave do formulario
+                key: _formKey,
 
-                      // vínculo do controlador com o campo de texto
-                      controller: taskController,
-                      // estiliza o texto do campo
-                      style: TextStyle(fontSize: 24, color: Colors.black87),
+                // prop child é obrigatoria para o form!!
+                // row renderiza na forma horizontal, um ao lado do outro.
+                // iremos colocar um campo de input e um botao lado a lado
+                child: Row(
+                  children: <Widget>[
+                    // input precisa estar dentro de uma definicao de tamanho de campo
+                    // expanded utiliza todo o espaço da linha disponivel, só pode ter 1 child
+                    Expanded(
+                      child: TextFormField(
+                        // validação do campo, se o campo estiver vazio retorna erro.
+                        // se o validator retornar NULL campo está preenchido.
+                        // próximo passo: chamar o validator ao clicar no button
+                        validator: (value) {
+                          if (value.trim().isEmpty) {
+                            return 'Task field is required!';
+                          }
+                          return null;
+                        },
 
-                      // estiliza o campo
-                      decoration: InputDecoration(
-                          hintText: 'Type a new task here...',
-                          hintStyle: TextStyle(fontSize: 16)),
+                        // vínculo do controlador com o campo de texto
+                        controller: taskController,
+                        // estiliza o texto do campo
+                        style: TextStyle(fontSize: 24, color: Colors.black87),
 
-                      // define o tipo de campo (texto, email, numero)
-                      keyboardType: TextInputType.text,
-                    ),
-                  ),
-                  Container(
-                    // margin: medida em pixel
-                    margin: EdgeInsets.only(left: 20),
-                    child: RaisedButton(
-                      // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
-                      child: Text(
-                        'Add',
-                        style: TextStyle(fontSize: 17),
+                        // estiliza o campo
+                        decoration: InputDecoration(
+                            hintText: 'Type a new task here...',
+                            hintStyle: TextStyle(fontSize: 16)),
+
+                        // define o tipo de campo (texto, email, numero)
+                        keyboardType: TextInputType.text,
                       ),
-                      onPressed: () {
-                        // através da chave do form ele pega o estado atual e valida
-                        if (_formKey.currentState.validate()) {
-                          // chama a funcao build a cada add na lista, e mudamos o estado do componente
-                          // dentro do set state as tarefas devem ser adicionadas pois ele executa o build
-                          // notifica o app q o estado mudou, e chama a funcao build adicionando na lista
-                          // add é executado antes do build
-                          setState(() {
-                            // se for válido mostra o q foi digitado no terminal
-                            // se o campo estiver vazio ele mostra a mensagem de erro ...
-                            // .. definida na regra de validação do validator
-                            String task = taskController.text;
-                            // controlador recebe o conteudo do texto ao clicar no botão
-                            // adicionando tarefa na lista e limpando campo
-                            _tasks.add(task);
-                          });
-
-                          taskController.clear();
-                        }
-                      },
-                      // definindo border radius dentro do button
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20.0)),
-                      color: Colors.blue,
-                      textColor: Colors.white,
                     ),
-                  )
-                ],
+                    Container(
+                      // margin: medida em pixel
+                      margin: EdgeInsets.only(left: 20),
+                      child: RaisedButton(
+                        // raisedbutton vem desabilitado por padrao, precisamos add a funcao onPressed()
+                        child: Text(
+                          'Add',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                        onPressed: () {
+                          // através da chave do form ele pega o estado atual e valida
+                          if (_formKey.currentState.validate()) {
+                            // chama a funcao build a cada add na lista, e mudamos o estado do componente
+                            // dentro do set state as tarefas devem ser adicionadas pois ele executa o build
+                            // notifica o app q o estado mudou, e chama a funcao build adicionando na lista
+                            // add é executado antes do build
+                            setState(() {
+                              // se for válido mostra o q foi digitado no terminal
+                              // se o campo estiver vazio ele mostra a mensagem de erro ...
+                              // .. definida na regra de validação do validator
+                              String task = taskController.text;
+                              // controlador recebe o conteudo do texto ao clicar no botão
+                              // adicionando tarefa na lista e limpando campo
+                              _tasks.add(task);
+                            });
+
+                            taskController.clear();
+                          }
+                        },
+                        // definindo border radius dentro do button
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(20.0)),
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -174,8 +178,11 @@ class MyHomeState extends State<MyHome> {
 
                 // builder q monta a lista a cada clique no botao
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text((index+1).toString() + ' - ' + _tasks[index]),
+                  return Card(
+                    child: ListTile(
+                      title:
+                          Text((index + 1).toString() + ' - ' + _tasks[index]),
+                    ),
                   );
                 },
               ),
